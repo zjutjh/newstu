@@ -1,5 +1,8 @@
 <template>
     <div class="cont">  
+        <div class="logo clear">
+          <img src="../assets/logo.png">
+        </div>
         <div class="info-from">
             <div class="info-item">
                 <label for="name">姓名：</label>
@@ -75,27 +78,35 @@
     .cont{
            width: 100%;
            height: 100%;
-           background: url('../assets/bc.png') no-repeat;
+           background-color: #8cbbb1;
            -webkit-background-size: 100%;
            background-size: 100%;
-        }
+     }
+
     .clear{
         overflow: auto;
+    }
+    
+    .cont .logo {
+         position: relative;
+         top: 10%;
     }
     .cont .info-from{
         display: block;
         position: relative;
-        top: 33%;
+        top: 15%;
         height: auto;
         width: 100%;
     }
+
     .cont .info-from .info-item{
          width: 85%;
          height: 31px;
          margin: 0 auto;
-         margin-bottom: 40px;
+         margin-bottom: 3rem;
          border-bottom: 2px solid #faf6f2;
     }
+
     .cont .info-from label{
         float: left;
         color: #faf6f2;
@@ -104,22 +115,25 @@
         padding: 5px 6px 5px 0;
         vertical-align: middle;
     }
+
     .cont .info-from input{
         outline: none;
-        background-color: #8cbbb1;
+        background: none;
         border: none;
         height: 29px;
         font-size: 15px;
         color: #faf6f2;
         float: left;
     }
+
     .cont .cr{
         position: relative;
-        font-size: 8px;
+        font-size: 0.8rem;
         color: #5a5a62;
-        top: 54%;
+        top: 25%;
         right: 25%
     }
+
     .cont .button{
         background-color: #8cbbb1;
         border: none;
