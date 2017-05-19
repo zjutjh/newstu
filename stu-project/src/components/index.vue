@@ -127,11 +127,12 @@
     }
 
     .cont .cr{
-        position: relative;
+        position: absolute;
         font-size: 0.8rem;
-        color: #5a5a62;
-        top: 25%;
-        right: 25%
+        color: #fff;
+        bottom: 1%;
+        right: 50%;
+        transform: translate(-50%, 0);
     }
 
     .cont .button{
@@ -144,6 +145,10 @@
         font-size: 16px;
         border: 1px solid #faf6f2;
         color: #faf6f2;
+    }
+    
+    input::-webkit-input-placeholder {
+        color: #fff;
     }
 
 
