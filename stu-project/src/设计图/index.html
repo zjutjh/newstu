@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>index</title>
+    <meta name="viewport" content="width=device-width,inital-scale=1.0,user-scalable=no">
+
+    <script src ="./dist/iview.js"></script>
+    <!-- 引入样式 -->
+    <link rel   ="stylesheet" href="./dist/styles/iview.css">
+    <!-- 引入组件库 -->
+    <script src ="./dist/iview.min.js"></script>
+    <style>
+         html, body{
+            width:  100%;
+            height:  100%;
+         }
+        *{
+            padding: 0;
+            margin: 0;
+        }
+        .container{
+           width: 100%;
+           height: 100%;
+           background: url('../assets/bc.png') no-repeat;
+           background-size: 100%;
+        }
+
+
+    </style>
+</head>
+<body>
+    <div class="container" id="app">
+    <i-form ref="formInline" :model="formInline" :rules="ruleInline" inline>
+        <Form-item prop="user">
+            <i-input type="text" v-model="formInline.user" placeholder="Username">
+                <Icon type="ios-person-outline" slot="prepend"></Icon>
+            </i-input>
+        </Form-item>
+        <Form-item prop="password">
+            <i-input type="password" v-model="formInline.password" placeholder="Password">
+                <Icon type="ios-locked-outline" slot="prepend"></Icon>
+            </i-input>
+        </Form-item>
+        <Form-item>
+            <i-button type="primary" @click="handleSubmit('formInline')">登录</i-button>
+        </Form-item>
+    </i-form>
+    </div>
+<script type="text/javascript">
+    new Vue({
+        el: '#app',
+        data: {
+           formInline: {
+                    user: '',
+                    password: ''
+                },
+                ruleInline: {
+                    user: [
+                        { required: true, message: '请填写用户名', trigger: 'blur' }
+                    ],
+                    password: [
+                        { required: true, message: '请填写密码', trigger: 'blur' },
+                        { type: 'string', min: 6, message: '密码长度不能小于6位', trigger: 'blur' }
+                    ]
+                }
+        }
+    })
+</script>
+</body>
+</html>
