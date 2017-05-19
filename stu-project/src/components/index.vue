@@ -131,7 +131,7 @@
         font-size: 0.8rem;
         color: #fff;
         bottom: 1%;
-        right: 50%;
+        left: 50%;
         transform: translate(-50%, 0);
     }
 
