@@ -1,47 +1,61 @@
 <template>
-    <div class="cont">  
+    <div class="cont">
         <div class="logo clear">
           <img src="../assets/logo.png">
         </div>
         <div class="info-from">
             <div class="info-item">
                 <label for="name">姓名：</label>
-                <input type="text" name="name" id="name" placeholder="请输入姓名" v-model="name" >
+                <input type="text"  class="info-item-input" name="name" id="name" placeholder="请输入姓名" :disabled="disabledTrigger" v-model="name" >
             </div>
             <div class="info-item">
                 <label for="id">身份证：</label>
-                <input type="text" name="id" id="id" placeholder="请输入身份证号码" v-model="id" >
+                <input type="text" class="info-item-input" name="id" id="id" placeholder="请输入身份证号码" :disabled="disabledTrigger" v-model="id" >
             </div>
-            <button class="button" v-on:click="sendInfo" v-loading.fullscreen.lock="fullscreen">查询</button>
+            <button class="button" @click="sendInfo" :disabled="disabledTrigger">{{searchText}}</button>
         </div>
         <p class="cr">©浙江工业大学精弘网络</p>
     </div>
 
 </template>
 <script>
-    export default {
+  /* eslint-disable indent */
+
+  export default {
        data: function() {
         return {
             name: '',
             id: '',
-            fullscreen: false,
+            disabledTrigger:false,
+          searchText:"查询"
+
         }
        },
        methods: {
         sendInfo () {
-            this.fullscreen = true;
+//          console.log(1)
             let _this = this;
             // let ad = random(1, 1000);
             let num = 1000;
-            this.$http.post('http://localhost/new-stu/stu-api/test.php',{name: _this.name, id: _this.id, nu: num},
+
+          this.disabledTrigger = !this.disabledTrigger;
+          this.searchText = '查询中...'
+            this.$http.post(
+              'http://localhost/new-stu/stu-api/test.php',
+              {name: _this.name, id: _this.id.toUpperCase(), nu: num},
               {emulateJSON: true}
-              ).then(function (res){
-                this.fullscreen = false;
+            ).then(
+              function (res) {
                 alert(res.body.name + ' ' + res.body.id);
-            }, function(){
-                this.fullscreen = false;
+                this.disabledTrigger = !this.disabledTrigger;
+                this.searchText = '查询'
+              },
+              function () {
                 alert('error');
-            });}
+                this.disabledTrigger = !this.disabledTrigger;
+                this.searchText = '查询'
+              });
+        }
 
         // }
           // sendInfo () {
@@ -63,10 +77,10 @@
           //       error: function(XMLHttpRequest, textStatus, errorThrown){
           //           _this.fullscreen = false;
           //           alert('2');
-          //           alert(XMLHttpRequest.status);  
-          //           alert(XMLHttpRequest.readyState);  
-          //           alert(textStatus);  
-          //           alert(XMLHttpRequest.responseText); 
+          //           alert(XMLHttpRequest.status);
+          //           alert(XMLHttpRequest.readyState);
+          //           alert(textStatus);
+          //           alert(XMLHttpRequest.responseText);
           //       }
 
           //   })
@@ -86,7 +100,7 @@
     .clear{
         overflow: auto;
     }
-    
+
     .cont .logo {
          position: relative;
          top: 10%;
@@ -101,31 +115,41 @@
 
     .cont .info-from .info-item{
          width: 85%;
-         height: 31px;
-         margin: 0 auto;
-         margin-bottom: 3rem;
-         border-bottom: 2px solid #faf6f2;
+         height: 18px;
+         margin: 0 auto 3rem  ;
+          line-height: 18px;
+
+
     }
 
     .cont .info-from label{
+
         float: left;
         color: #faf6f2;
-        font-size: 15px;
-        box-sizing: border-box;
-        padding: 5px 6px 5px 0;
-        vertical-align: middle;
+        font-size: 14px;
+        height: 18px;
+        /*box-sizing: border-box;*/
+        padding: 0 0 0 5px;
+        /*vertical-align: middle;*/
     }
 
     .cont .info-from input{
+      width: 80%;
         outline: none;
         background: none;
         border: none;
-        height: 29px;
+        height: 18px;
+        line-height: 18px;
         font-size: 15px;
         color: #faf6f2;
-        float: left;
+        float: right;
+      text-align: center;
+      border-bottom: 2px solid #faf6f2;
+      transition: .5s border ease;
     }
-
+    .cont .info-from input:focus{
+      border-bottom-color: #fff181;
+    }
     .cont .cr{
         position: absolute;
         font-size: 0.8rem;
@@ -146,7 +170,13 @@
         border: 1px solid #faf6f2;
         color: #faf6f2;
     }
-    
+    .cr {
+      position: fixed;
+      bottom: 5px;
+      width: 100%;
+      text-align: center;
+    }
+
     input::-webkit-input-placeholder {
         color: #fff;
     }
