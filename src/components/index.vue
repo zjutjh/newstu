@@ -15,32 +15,41 @@
             <button class="button" v-on:click="sendInfo" v-loading.fullscreen.lock="fullscreen">查询</button>
         </div>
         <p class="cr">©浙江工业大学精弘网络</p>
+        <div class="loading" v-if="loading">
+          <div class="double">
+            <div class="double-bounce1"></div>
+            <div class="double-bounce2"></div>
+          </div>
+        </div>
     </div>
 
 </template>
 <script>
+     import router from '../router/index.js'
     export default {
        data: function() {
         return {
             name: '',
             id: '',
             fullscreen: false,
+            loading: false
         }
        },
        methods: {
         sendInfo () {
-            this.fullscreen = true;
+            this.loading = true;
             let _this = this;
             // let ad = random(1, 1000);
             let num = 1000;
             this.$http.post('http://localhost/new-stu/stu-api/test.php',{name: _this.name, id: _this.id, nu: num},
               {emulateJSON: true}
               ).then(function (res){
-                this.fullscreen = false;
+                _this.loading = false;
                 alert(res.body.name + ' ' + res.body.id);
             }, function(){
-                this.fullscreen = false;
+                _this.loading = false;
                 alert('error');
+                router.push('detail');
             });}
 
         // }
@@ -149,7 +158,64 @@
     
     input::-webkit-input-placeholder {
         color: #fff;
+        font-size: 13px;
     }
 
+    .loading {
+      position: absolute;
+      z-index: 1000;
+      margin: 0;
+      top: 0;
+      right: 0;
+      left: 0;
+      bottom: 0;
+      background-color: rgba(255, 255, 255, .9);
+
+    }
+
+    .double {
+      height: 10%;
+      width: 10%;
+      position: relative;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+    }
+    
+    .double-bounce1, .double-bounce2 {
+        width: 100%;
+        height: 100%;
+        border-radius: 50%;
+        background-color: #8cbbb1;
+        opacity: 0.6;
+        position: absolute;
+        top: 0;
+        left: 0;
+        -webkit-animation: bounce 2.0s infinite ease-in-out;
+        animation: bounce 2.0s infinite ease-in-out;
+      }
+ 
+.double-bounce2 {
+  -webkit-animation-delay: -1.0s;
+  animation-delay: -1.0s;
+}
+ 
+@-webkit-keyframes bounce {
+  0%, 100% { -webkit-transform: scale(0.0) ;
+             }
+
+  50% { -webkit-transform: scale(1.0) ;
+       }
+}
+ 
+@keyframes bounce {
+  0%, 100% {
+    transform: scale(0.0) ;
+    -webkit-transform: scale(0.0);
+  } 50% {
+    transform: scale(1.0) ;
+    -webkit-transform: scale(1.0);
+  }
+}
 
 </style>
